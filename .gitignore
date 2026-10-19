@@ -1,0 +1,17 @@
+# Tokens y secretos de Slack: nunca al repo
+slack-token.txt
+slack-bot-token.txt
+slack-signing-secret.txt
+*.txt
+
+# Los audios son de cada uno (y muchos tienen derechos de autor)
+Sonidos/
+
+# Servidor
+app/node_modules/
+app/.wrangler/
+app/.dev.vars
+
+# Receptor
+receptor/dist/
+receptor/*.exe

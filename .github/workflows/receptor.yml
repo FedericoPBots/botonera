@@ -1,0 +1,78 @@
+# Arma el receptor para Windows, Linux y Mac, y lo deja en la release "receptor".
+name: receptor
+
+on:
+  push:
+    branches: [main]
+    paths: ["receptor/**", ".github/workflows/receptor.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  windows-linux:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: receptor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: receptor/go.mod
+          cache-dependency-path: receptor/go.sum
+      - name: Windows
+        run: GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-H windowsgui -s -w" -o dist/Botonera.exe .
+      - name: Linux
+        run: |
+          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-s -w" -o dist/botonera .
+          tar -czf dist/Botonera-linux-amd64.tar.gz -C dist botonera
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-linux
+          path: |
+            receptor/dist/Botonera.exe
+            receptor/dist/Botonera-linux-amd64.tar.gz
+
+  mac:
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: receptor
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: receptor/go.mod
+          cache-dependency-path: receptor/go.sum
+      # Un solo .app para Apple Silicon e Intel; firma ad-hoc (sin cuenta de Apple).
+      - name: Botonera.app
+        run: |
+          CGO_ENABLED=1 GOARCH=arm64 go build -ldflags "-s -w" -o dist/botonera-arm64 .
+          CGO_ENABLED=1 GOARCH=amd64 go build -ldflags "-s -w" -o dist/botonera-amd64 .
+          mkdir -p dist/Botonera.app/Contents/MacOS
+          lipo -create -output dist/Botonera.app/Contents/MacOS/Botonera dist/botonera-arm64 dist/botonera-amd64
+          cp mac/Info.plist dist/Botonera.app/Contents/Info.plist
+          codesign --force --deep -s - dist/Botonera.app
+          ditto -c -k --keepParent dist/Botonera.app dist/Botonera-mac.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mac
+          path: receptor/dist/Botonera-mac.zip
+
+  release:
+    needs: [windows-linux, mac]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+          path: dist
+      - name: Release "receptor"
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh release view receptor >/dev/null 2>&1 || gh release create receptor --title "Receptor" --notes "Receptor de escritorio de la Botonera, rearmado en cada cambio."
+          gh release upload receptor dist/* --clobber

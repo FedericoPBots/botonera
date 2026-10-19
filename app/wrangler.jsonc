@@ -1,0 +1,22 @@
+{
+  "name": "botonera",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": true,
+  // El ID del canal de la botonera; los tokens van como secretos (BOT_TOKEN, SIGNING_SECRET).
+  "vars": {
+    "CHANNEL_ID": "C0CA94QEZV1"
+  },
+  // Los sonidos: clave "sound:<nombre>", el audio como valor y nombre, archivo y autor en la metadata.
+  "kv_namespaces": [
+    {
+      "binding": "SOUNDS",
+      "id": "c299b4a806be41fba33f13927989795b"
+    }
+  ],
+  // El hub de los receptores de escritorio (WebSockets). SQLite es lo que entra en el plan gratis.
+  "durable_objects": {
+    "bindings": [{ "name": "HUB", "class_name": "Receptores" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Receptores"] }]
+}
