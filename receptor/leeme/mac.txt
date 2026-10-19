@@ -1,0 +1,17 @@
+BOTONERA - RECEPTOR PARA MAC
+============================
+
+El receptor reproduce en tu Mac, al instante, cada sonido que se manda desde
+la Botonera de Slack. Vive en la barra de menú (arriba a la derecha) como un
+parlante violeta, sin ícono en el Dock.
+
+
+1. INSTALARLO
+-------------
+1. Arrastrá "Botonera.app" a la carpeta Aplicaciones.
+2. Abrila con doble clic. La primera vez macOS la bloquea con un aviso
+   ("no se puede verificar el desarrollador"), porque la app no tiene firma de
+   Apple. Es normal: tocá "Listo" o "Cancelar".
+3. Abrí Ajustes del Sistema > Privacidad y seguridad. Bajá hasta ver
+   "Se bloqueó Botonera" y tocá "Abrir igualmente". Confirmá con tu contraseña.
+4. Aparece el parlante violeta en la barra de menú. Esto se hace una sola vez.

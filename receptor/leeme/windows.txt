@@ -1,0 +1,18 @@
+BOTONERA - RECEPTOR PARA WINDOWS
+================================
+
+El receptor reproduce en tu PC, al instante, cada sonido que se manda desde
+la Botonera de Slack. Vive en la bandeja del sistema, al lado del reloj, como
+un parlante violeta.
+
+
+1. INSTALARLO
+-------------
+1. Mové "Botonera.exe" a una carpeta donde vaya a quedar, por ejemplo
+   Documentos\Botonera. (Si lo movés después, desactivá y volvé a activar
+   "Arrancar con la PC" en el menú.)
+2. Abrilo con doble clic. Si Windows muestra "Windows protegió su PC" (editor
+   desconocido), tocá "Más información" y después "Ejecutar de todas formas".
+   Es porque la app no tiene firma digital; pasa una sola vez.
+3. Aparece el parlante violeta al lado del reloj. Si no lo ves, buscalo en la
+   flechita ^ de íconos ocultos y arrastralo a la barra.

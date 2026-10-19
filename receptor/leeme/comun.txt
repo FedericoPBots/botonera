@@ -1,0 +1,58 @@
+
+2. CONECTARLO A TU CUENTA
+-------------------------
+1. En Slack, en el canal #botonera-dev, escribí:  /sonido receptor
+   (Apretá Enter dos veces: el primero solo cierra el menú de Slack.)
+2. Te aparece una clave larga que solo ves vos. Copiala.
+3. Hacé clic en el parlante violeta y elegí "Pegar clave del portapapeles".
+4. Arriba del menú tiene que decir "Conectado". Listo.
+
+La clave es personal: no la compartas. Si la perdés o pedís otra, la anterior
+deja de andar. Si salís del canal, el receptor deja de sonar.
+
+
+3. EL MENÚ DEL PARLANTE
+-----------------------
+- Estado (la primera línea): Conectado, En pausa, Falta la clave, etc.
+- Pegar clave del portapapeles: para cargar o cambiar la clave.
+- Silenciar: no suena nada hasta que lo destildes.
+- Silenciar 1 hora: ideal para reuniones.
+- Solo con Slack abierto (activado): si cerrás Slack, el receptor queda en
+  pausa y no suena.
+- Arrancar con la PC (activado): se abre solo al prender la compu, así no
+  tenés que acordarte de abrirlo.
+- Salir: lo cierra hasta la próxima vez que lo abras o prendas la compu.
+
+
+4. CÓMO SE USA LA BOTONERA EN SLACK
+-----------------------------------
+Mandar un sonido:
+- /sonido              Abre la botonera con un buscador: elegís un sonido y
+                       se manda. Abajo están todos los botones.
+- /sonido nombre       Lo manda directo. Ejemplo: /sonido pefeto
+- Reaccioná con :loud_sound: a cualquier mensaje del canal y te aparece la
+  grilla de botones.
+- La pestaña "Inicio" de la app Botonera (en Apps, en la barra de Slack) tiene
+  la botonera siempre a mano.
+
+Agregar y sacar sonidos:
+- Subí un MP3 al canal y escribí su nombre en el mensaje. Hasta 2 MB; mejor
+  clips de pocos segundos. El bot te confirma en el hilo.
+- /sonido borrar nombre   Lo saca de la botonera.
+
+Otros:
+- /sonido ayuda        Muestra todos los comandos.
+
+Cada sonido sale en el canal con el nombre de quien lo mandó. El receptor
+reproduce todos los que se mandan, de a uno por vez.
+
+
+5. SI ALGO NO ANDA
+------------------
+- "La clave no sirve": pedí una nueva con /sonido receptor y pegala.
+- "Sin acceso": tenés que estar en #botonera-dev; pedí que te sumen.
+- "En pausa: Slack está cerrado": abrí Slack, o destildá "Solo con Slack
+  abierto".
+- "Sin conexión, reintentando…": revisá internet; se reconecta solo.
+- No suena pero dice "Conectado": revisá que no esté en Silenciar y el
+  volumen de la compu.

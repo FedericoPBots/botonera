@@ -2,7 +2,6 @@
 slack-token.txt
 slack-bot-token.txt
 slack-signing-secret.txt
-*.txt
 
 # Los audios son de cada uno (y muchos tienen derechos de autor)
 Sonidos/

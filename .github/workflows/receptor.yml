@@ -22,17 +22,24 @@ jobs:
         with:
           go-version-file: receptor/go.mod
           cache-dependency-path: receptor/go.sum
+      # Cada paquete trae su LEEME.txt: la instalación de ese sistema y después la guía común.
       - name: Windows
-        run: GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-H windowsgui -s -w" -o dist/Botonera.exe .
+        run: |
+          mkdir -p dist/windows/Botonera
+          GOOS=windows GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-H windowsgui -s -w" -o dist/windows/Botonera/Botonera.exe .
+          cat leeme/windows.txt leeme/comun.txt | sed 's/$/\r/' > dist/windows/Botonera/LEEME.txt
+          (cd dist/windows && zip -qr ../Botonera-windows.zip Botonera)
       - name: Linux
         run: |
-          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-s -w" -o dist/botonera .
-          tar -czf dist/Botonera-linux-amd64.tar.gz -C dist botonera
+          mkdir -p dist/linux/Botonera
+          GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags "-s -w" -o dist/linux/Botonera/botonera .
+          cat leeme/linux.txt leeme/comun.txt > dist/linux/Botonera/LEEME.txt
+          tar -czf dist/Botonera-linux-amd64.tar.gz -C dist/linux Botonera
       - uses: actions/upload-artifact@v4
         with:
           name: windows-linux
           path: |
-            receptor/dist/Botonera.exe
+            receptor/dist/Botonera-windows.zip
             receptor/dist/Botonera-linux-amd64.tar.gz
 
   mac:
@@ -51,11 +58,13 @@ jobs:
         run: |
           CGO_ENABLED=1 GOARCH=arm64 go build -ldflags "-s -w" -o dist/botonera-arm64 .
           CGO_ENABLED=1 GOARCH=amd64 go build -ldflags "-s -w" -o dist/botonera-amd64 .
-          mkdir -p dist/Botonera.app/Contents/MacOS
-          lipo -create -output dist/Botonera.app/Contents/MacOS/Botonera dist/botonera-arm64 dist/botonera-amd64
-          cp mac/Info.plist dist/Botonera.app/Contents/Info.plist
-          codesign --force --deep -s - dist/Botonera.app
-          ditto -c -k --keepParent dist/Botonera.app dist/Botonera-mac.zip
+          app=dist/Botonera/Botonera.app
+          mkdir -p $app/Contents/MacOS
+          lipo -create -output $app/Contents/MacOS/Botonera dist/botonera-arm64 dist/botonera-amd64
+          cp mac/Info.plist $app/Contents/Info.plist
+          codesign --force --deep -s - $app
+          cat leeme/mac.txt leeme/comun.txt > dist/Botonera/LEEME.txt
+          ditto -c -k --keepParent dist/Botonera dist/Botonera-mac.zip
       - uses: actions/upload-artifact@v4
         with:
           name: mac
@@ -76,3 +85,5 @@ jobs:
         run: |
           gh release view receptor >/dev/null 2>&1 || gh release create receptor --title "Receptor" --notes "Receptor de escritorio de la Botonera, rearmado en cada cambio."
           gh release upload receptor dist/* --clobber
+          # El .exe suelto de la primera versión ya no se publica.
+          gh release delete-asset receptor Botonera.exe -y 2>/dev/null || true

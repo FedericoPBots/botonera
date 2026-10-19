@@ -1,0 +1,18 @@
+BOTONERA - RECEPTOR PARA LINUX
+==============================
+
+El receptor reproduce en tu compu, al instante, cada sonido que se manda desde
+la Botonera de Slack. Vive en la bandeja del sistema como un parlante violeta.
+
+
+1. INSTALARLO
+-------------
+1. Instalá un reproductor de audio (alcanza con uno):
+     sudo apt install mpg123        (o: sudo apt install ffmpeg)
+2. Mové el archivo "botonera" a una carpeta donde vaya a quedar, por ejemplo
+   ~/.local/bin, y abrilo:
+     chmod +x botonera
+     ./botonera
+3. Aparece el parlante violeta en la bandeja. En GNOME (Ubuntu) la bandeja
+   necesita la extensión "AppIndicator" (en Ubuntu ya viene instalada). En KDE
+   y otros escritorios anda directo.
